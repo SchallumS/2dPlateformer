@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,6 +20,10 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private HealthBarUI healthBar;
+
+    [SerializeField]
+    private GameObject Panel;
+
    void Start()
    {
         rb = GetComponent<Rigidbody2D>();
@@ -71,8 +78,20 @@ public class PlayerMovement : MonoBehaviour
         }
         if (is_dead)
         {
+            Panel.SetActive(true);
             Debug.Log("Player is dead");
+            StartCoroutine(DisplayDeathMessage(5f));
         }
+    }
+
+    IEnumerator DisplayDeathMessage(float seconds)
+    {
+        //Time.timeScale = 0;
+        Panel.SetActive(true); // Show the death text
+        yield return new WaitForSeconds(seconds); // Wait for 5 seconds
+        //Time.timeScale = 1;
+        SceneManager.LoadScene("LevelSelection");
+        //deathText.SetActive(false); // Hide the death text
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -91,6 +110,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Destroy(collision.gameObject);
             SetHealth(20f);
+        } if (collision.gameObject.CompareTag("Finish")) {
+            SceneManager.LoadScene("LevelSelection");
         }
     }
 

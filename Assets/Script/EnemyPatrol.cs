@@ -32,17 +32,6 @@ public class EnemyPatrol : MonoBehaviour
         {
             // Switch target between point A and point B
             target = target == pointA.position ? pointB.position : pointA.position;
-
-            // Another way to write the thing upward
-            /*if (target == pointA.position)
-            {
-                target = pointB.position;
-            }
-            else
-            {
-                target = pointA.position;
-            }*/
-
         }
 
 
