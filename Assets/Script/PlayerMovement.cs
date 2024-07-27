@@ -112,6 +112,8 @@ public class PlayerMovement : MonoBehaviour
             SetHealth(20f);
         } if (collision.gameObject.CompareTag("Finish")) {
             SceneManager.LoadScene("LevelSelection");
+        } if (collision.gameObject.CompareTag("Respawn")) {
+            StartCoroutine(DisplayDeathMessage(5f));
         }
     }
 
